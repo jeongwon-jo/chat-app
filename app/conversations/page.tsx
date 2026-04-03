@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ConversationsPage = () => {
+const ConversationPage = () => {
   return (
-    <div>ConversationsPage</div>
+    <div>ConversationPage</div>
   )
 }
 
-export default ConversationsPage
+export default ConversationPage
