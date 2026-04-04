@@ -14,7 +14,7 @@ const DesktopSidebar = ({ currentUser }: DesktopSidebarProps) => {
   const routes = useRoutes()
   const [isOpen, setIsOpen] = useState(false);
 
-  return <div className={`hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 xl:px-4 lg:overflow-y-auto lg:bg-orange-400 lg:pb-4 lg:flex lg:flex-col justify-between`}>
+  return <div className={`hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:w-20 lg:px-2 xl:px-4 lg:overflow-y-auto lg:bg-orange-400 lg:pb-4 lg:flex lg:flex-col justify-between`}>
     <nav className={`flex flex-col justify-between mt-4`}>
       <ul className={`flex flex-col items-center space-y-2`}>
         {routes.map((item) => (

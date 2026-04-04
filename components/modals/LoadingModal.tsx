@@ -1,3 +1,5 @@
+"use client"
+
 import React, { Fragment } from 'react'
 import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react"
 import { ClipLoader } from 'react-spinners'
