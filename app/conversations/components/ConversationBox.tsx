@@ -50,8 +50,12 @@ const ConversationBox = ({data, selected}: ConversationBoxProps) => {
     return seenArray.filter((user) => user.email === userEmail).length !== 0
   }, [lastMessage, userEmail])
 
+  const handleClick = () => {
+    router.push(`/conversations/${data.id}`)
+  }
+  
   return (
-    <div className={clsx(`w-full relative flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 transition cursor-pointer mb-3`, selected ? "bg-neutral-300" :"bg-white")}>
+    <div onClick={handleClick} className={clsx(`w-full relative flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 transition cursor-pointer mb-3`, selected ? "bg-neutral-300" :"bg-white")}>
       {data.isGroup ? <AvatarGroup users={data.users}/> : <Avatar user={otherUser}/>}
       <div className='flex-1 min-w-0'>
         <div className='focus:outline-none'>
