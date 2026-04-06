@@ -55,7 +55,7 @@ const ConversationBox = ({data, selected}: ConversationBoxProps) => {
   }
   
   return (
-    <div onClick={handleClick} className={clsx(`w-full relative flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 transition cursor-pointer mb-3`, selected ? "bg-neutral-300" :"bg-white")}>
+    <div onClick={handleClick} className={clsx(`w-full relative flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 transition cursor-pointer mb-3`, selected ? "bg-neutral-200" :"bg-white")}>
       {data.isGroup ? <AvatarGroup users={data.users}/> : <Avatar user={otherUser}/>}
       <div className='flex-1 min-w-0'>
         <div className='focus:outline-none'>

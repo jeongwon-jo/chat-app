@@ -1,4 +1,4 @@
-import { User } from 'next-auth';
+import { User } from '@/app/generated/prisma/client';
 import Image from 'next/image';
 import React from 'react'
 

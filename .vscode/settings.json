@@ -1,4 +1,11 @@
 {
   "prisma.pinToPrisma6": true,
-  "tailwindCSS.experimental.configFile": "app/globals.css"
+  "tailwindCSS.experimental.configFile": "app/globals.css",
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.includeLanguages": {
+    "typescript": "html",
+    "typescriptreact": "html"
+  }
 }

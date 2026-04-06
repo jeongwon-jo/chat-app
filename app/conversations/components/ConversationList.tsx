@@ -2,7 +2,7 @@
 import { User } from '@/app/generated/prisma/client';
 import useConverSation from '@/hooks/useConversation';
 import { FullConversationType } from '@/types'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {MdOutlineGroupAdd} from "react-icons/md"
 import ConversationBox from './ConversationBox';
 import clsx from 'clsx';
@@ -15,10 +15,14 @@ interface ConversationListProps {
 const ConversationList = ({initialItems, users, title} : ConversationListProps) => {
   const [items, setItems] = useState(initialItems);
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  useEffect(() => {
+    setItems(initialItems);
+  }, [initialItems]);
   const {conversationId, isOpen} = useConverSation()
 
   return (
-    <aside className={clsx(`fixed inset-y-0 pb-20 lg:pb-0 lg:left-20 lg:w-80 lg:block overflow-y-auto border-r border-gray-200`, isOpen ? "hidden" : "block w-full left-40")}>
+    <aside className={clsx(`fixed inset-y-0 pb-20 lg:pb-0 lg:left-20 lg:w-80 lg:block overflow-y-auto border-r border-gray-200`, isOpen ? "hidden" : "block w-full left-0")}>
       <div className='px-5'>
         <div className='flex justify-between pt-4 mb-4'>
           <div className='text-2xl font-bold text-neutral-800 '>
@@ -30,10 +34,12 @@ const ConversationList = ({initialItems, users, title} : ConversationListProps) 
         </div>
         
       </div>
-
-      {items.map((item) => (
+      <div className='px-3'>
+        {items.map((item) => (
         <ConversationBox key={item.id} data={item} selected={conversationId === item.id}/>
       ))}
+      </div>
+      
 
       
     </aside>
