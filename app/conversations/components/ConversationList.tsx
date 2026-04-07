@@ -6,6 +6,9 @@ import React, { useEffect, useState } from 'react'
 import {MdOutlineGroupAdd} from "react-icons/md"
 import ConversationBox from './ConversationBox';
 import clsx from 'clsx';
+import { useSession } from 'next-auth/react';
+import { getPusherClient } from '@/libs/pusherClient';
+import { find } from 'lodash';
 
 interface ConversationListProps {
   initialItems: FullConversationType[];
@@ -14,12 +17,64 @@ interface ConversationListProps {
 }
 const ConversationList = ({initialItems, users, title} : ConversationListProps) => {
   const [items, setItems] = useState(initialItems);
+  const session = useSession()
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const pusherKey = session.data?.user?.email  
 
   useEffect(() => {
     setItems(initialItems);
   }, [initialItems]);
-  const {conversationId, isOpen} = useConverSation()
+  const { conversationId, isOpen } = useConverSation()
+  
+  useEffect(() => {
+    if (!pusherKey) {
+      return
+    }
+
+    const client = getPusherClient();
+    client.subscribe(pusherKey);
+
+    const updateHandler = (conversation:FullConversationType) => {
+      setItems((current) => 
+        current.map((currentConversation) => {
+          if (currentConversation.id === conversation.id) {
+            return {
+              ...currentConversation, 
+              messages: conversation.messages
+            }
+          } 
+          return currentConversation
+        })
+      ) 
+    }
+
+    const newHandler = (conversation: FullConversationType) => {
+      setItems((current) => {
+        if (find(current, { id: conversationId })) {
+          return current
+        }
+        return [conversation, ...current]
+      })  
+    }
+
+    const removeHandler = (conversation: FullConversationType) => {
+      setItems((current) => {
+        return [...current.filter((item) => item.id !== conversation.id)]
+      })
+    }
+    
+    client.bind("conversation:update", updateHandler);
+    client.bind("conversation:new", newHandler);
+    client.bind("conversation:remove", removeHandler);
+
+    return () => {
+      client.unsubscribe(pusherKey);
+      client.unbind("conversation:update", updateHandler);
+      client.unbind("conversation:new", newHandler);
+      client.unbind("conversation:remove", removeHandler);
+    }
+  }, [pusherKey]);
 
   return (
     <aside className={clsx(`fixed inset-y-0 pb-20 lg:pb-0 lg:left-20 lg:w-80 lg:block overflow-y-auto border-r border-gray-200`, isOpen ? "hidden" : "block w-full left-0")}>
