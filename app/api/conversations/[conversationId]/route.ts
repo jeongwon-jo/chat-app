@@ -12,8 +12,6 @@ export async function DELETE(_request: Request, { params }: { params: Promise<IP
 		const { conversationId } = await params;
 		const currentUser = await getCurrentUser();
 
-		console.log(conversationId);
-
 		if (!currentUser?.id) {
 			return NextResponse.json(null);
 		}

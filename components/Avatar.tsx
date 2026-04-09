@@ -9,11 +9,14 @@ const Avatar = ({ user }: AvatarProps) => {
   return (
 		<div className="relative">
 			<div className="relative inline-block rounded-full h-9 w-9 md:h-11 md:w-11">
-				<Image
-					fill
-					src={user?.image || "/images/placeholder.png"}
-					alt="Avatar"
-				/>
+				<div className='w-full h-full rounded-full overflow-hidden'>
+					<Image
+						fill
+						src={user?.image || "/images/placeholder.png"}
+						alt="Avatar"
+						className='rounded-full object-cover'
+					/>
+				</div>
 				<span
 					className={`absolute block rounded-full bg-green-500 ring-2 ring-white top-0 h-2 w-2 md:h-3 md:w-3 right-0`}
 				/>

@@ -21,7 +21,7 @@ const Body = ({ initialMessages }: BodyProps) => {
 		bottomRef?.current?.scrollIntoView();
 
 		const messageHandler = (message: FullMessageType) => {
-			// axios.post(`/api/conversations/${conversationId}/seen`)
+			axios.post(`/api/conversations/${conversationId}/seen`);
 			setMessages((current) => {
 				if (find(current, { id: message.id })) {
 					return current;
@@ -33,13 +33,33 @@ const Body = ({ initialMessages }: BodyProps) => {
 			bottomRef?.current?.scrollIntoView();
 		};
 
+		const updateMessageHandler = (newMessage: FullMessageType) => {
+			setMessages((current) =>
+				current.map((currentMessage) => {
+					if (currentMessage.id === newMessage.id) {
+						return newMessage;
+					}
+					return currentMessage;
+				}),
+			);
+		}
+
 		// message:new 이벤트가 오면 messageHandler 호출
 		client.bind("messages:new", messageHandler);
+		client.bind("messages:update", updateMessageHandler);
 
 		return () => {
 			client.unsubscribe(conversationId);
 			client.unbind("messages:new", messageHandler);
+			client.unbind("messages:update", updateMessageHandler);
+
 		};
+	}, [conversationId]);
+
+	useEffect(() => {
+		axios.post(`/api/conversations/${conversationId}/seen`);
+
+		return () => {};
 	}, [conversationId]);
 
 	return (
