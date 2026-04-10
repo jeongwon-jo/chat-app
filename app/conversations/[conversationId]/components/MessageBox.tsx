@@ -52,7 +52,7 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
   const reactionGroups = (data.reactions ?? []).reduce<Record<string, { count: number; mine: boolean }>>((acc, r) => {
     if (!acc[r.emoji]) acc[r.emoji] = { count: 0, mine: false };
     acc[r.emoji].count += 1;
-    if (r.userId === session.data?.user?.sub || r.userName === session.data?.user?.name) {
+    if (r.userName === session.data?.user?.name) {
       acc[r.emoji].mine = true;
     }
     return acc;
