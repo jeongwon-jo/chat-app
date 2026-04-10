@@ -65,7 +65,7 @@ const AuthForm = () => {
             router.push("/conversations");
 					}
         })
-        .catch(() => { toast.error("에러 발생") })
+        .catch((err) => { toast.error(err?.response?.data ?? "서버 오류가 발생했습니다") })
       .finally(() => {setIsLoading(false)})
     } 
     
