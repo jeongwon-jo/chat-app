@@ -1,6 +1,6 @@
 "use client"
 
-import { User } from '@/app/generated/prisma/client'
+import { User } from '@prisma/client'
 import useRoutes from '@/hooks/useRoutes';
 import React, { useState } from 'react'
 import Avatar from '../Avatar';

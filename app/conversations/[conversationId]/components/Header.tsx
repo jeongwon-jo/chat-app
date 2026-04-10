@@ -1,6 +1,6 @@
 "use client"
 
-import { Conversation, User } from '@/app/generated/prisma/client'
+import { Conversation, User } from '@prisma/client'
 import Avatar from '@/components/Avatar';
 import AvatarGroup from '@/components/AvatarGroup';
 import useActiveList from '@/hooks/useActiveList';

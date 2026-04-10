@@ -1,6 +1,6 @@
 "use client"
 
-import { Conversation, User } from '@/app/generated/prisma/client'
+import { Conversation, User } from '@prisma/client'
 import { FullMessageType, ReplyPreview } from '@/types'
 import { useState } from 'react'
 import Header from './Header'

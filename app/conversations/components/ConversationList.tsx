@@ -1,5 +1,5 @@
 "use client"
-import { User } from '@/app/generated/prisma/client';
+import { User } from '@prisma/client';
 import useConverSation from '@/hooks/useConversation';
 import { FullConversationType } from '@/types'
 import React, { useEffect, useMemo, useState } from 'react'

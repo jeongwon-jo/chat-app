@@ -2,7 +2,7 @@
 import Avatar from '@/components/Avatar'
 import LoadingModal from '@/components/modals/LoadingModal'
 import axios from 'axios'
-import { User } from "@/app/generated/prisma/client";
+import { User } from "@prisma/client";
 import { useRouter } from 'next/navigation'
 
 import React, { useState } from 'react'

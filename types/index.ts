@@ -1,4 +1,4 @@
-import { Conversation, Message, User } from "@/app/generated/prisma/client";
+import { Conversation, Message, User } from "@prisma/client";
 
 export type ReplyPreview = {
   id: string;

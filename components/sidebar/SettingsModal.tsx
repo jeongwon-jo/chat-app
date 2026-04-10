@@ -1,4 +1,4 @@
-import { User } from '@/app/generated/prisma/client';
+import { User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';

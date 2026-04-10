@@ -1,4 +1,4 @@
-import { Conversation, User } from '@/app/generated/prisma/client';
+import { Conversation, User } from '@prisma/client';
 import useOtherUser from '@/hooks/useOtheruser';
 import React, { useMemo, useState, Fragment } from "react";
 import { format } from "date-fns"
