@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+	serverExternalPackages: ["next-auth", "@next-auth/prisma-adapter"],
 	images: {
 		remotePatterns: [
 			{
