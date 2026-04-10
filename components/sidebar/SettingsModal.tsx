@@ -60,8 +60,8 @@ const SettingsModal = ({
 			<form action="" onSubmit={handleSubmit(onSubmit)}>
 				<div className='space-y-12'>
 					<div className='pb-12 border-b border-gray-900/10'>
-						<h2 className='text-base font-semibold leading-7 text-gray-900'>프로필</h2>
-						<p className='mt-1 text-sm leading-6 text-gray-600'>프로필을 수정하세요.</p>
+						<h2 className='text-base font-semibold leading-7 text-gray-900 dark:text-gray-100'>프로필</h2>
+						<p className='mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400'>프로필을 수정하세요.</p>
 						<div className='flex flex-col mt-10 gap-y-8'>
 							<Input
 								disabled={isLoading}

@@ -8,72 +8,100 @@ import { useEffect, useRef, useState } from 'react';
 import MessageBox from './MessageBox';
 
 interface BodyProps {
-  initialMessages: FullMessageType[]
+  initialMessages: FullMessageType[];
+  searchQuery?: string;
 }
-const Body = ({ initialMessages }: BodyProps) => {
-	const { conversationId } = useConverSation();
-	const [messages, setMessages] = useState<FullMessageType[]>(initialMessages);
-	const bottomRef = useRef<HTMLDivElement>(null);
 
-	useEffect(() => {
-		const client = getPusherClient();
-		client.subscribe(conversationId);
-		bottomRef?.current?.scrollIntoView();
+interface TypingUser {
+  userName: string;
+  isTyping: boolean;
+}
 
-		const messageHandler = (message: FullMessageType) => {
-			axios.post(`/api/conversations/${conversationId}/seen`);
-			setMessages((current) => {
-				if (find(current, { id: message.id })) {
-					return current;
-				}
+const Body = ({ initialMessages, searchQuery = '' }: BodyProps) => {
+  const { conversationId } = useConverSation();
+  const [messages, setMessages] = useState<FullMessageType[]>(initialMessages);
+  const [typingUsers, setTypingUsers] = useState<string[]>([]);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
-				return [...current, message];
-			});
+  useEffect(() => {
+    const client = getPusherClient();
+    client.subscribe(conversationId);
+    bottomRef?.current?.scrollIntoView();
 
-			bottomRef?.current?.scrollIntoView();
-		};
+    const messageHandler = (message: FullMessageType) => {
+      axios.post(`/api/conversations/${conversationId}/seen`);
+      setMessages((current) => {
+        if (find(current, { id: message.id })) return current;
+        return [...current, message];
+      });
+      bottomRef?.current?.scrollIntoView();
+    };
 
-		const updateMessageHandler = (newMessage: FullMessageType) => {
-			setMessages((current) =>
-				current.map((currentMessage) => {
-					if (currentMessage.id === newMessage.id) {
-						return newMessage;
-					}
-					return currentMessage;
-				}),
-			);
-		}
+    const updateMessageHandler = (newMessage: FullMessageType) => {
+      setMessages((current) =>
+        current.map((currentMessage) => {
+          if (currentMessage.id === newMessage.id) return newMessage;
+          return currentMessage;
+        }),
+      );
+    };
 
-		// message:new 이벤트가 오면 messageHandler 호출
-		client.bind("messages:new", messageHandler);
-		client.bind("messages:update", updateMessageHandler);
+    const typingHandler = ({ userName, isTyping }: TypingUser) => {
+      setTypingUsers((prev) => {
+        if (isTyping) {
+          return prev.includes(userName) ? prev : [...prev, userName]
+        }
+        return prev.filter((u) => u !== userName)
+      })
+    }
 
-		return () => {
-			client.unsubscribe(conversationId);
-			client.unbind("messages:new", messageHandler);
-			client.unbind("messages:update", updateMessageHandler);
+    client.bind("messages:new", messageHandler);
+    client.bind("messages:update", updateMessageHandler);
+    client.bind("typing", typingHandler);
 
-		};
-	}, [conversationId]);
+    return () => {
+      client.unsubscribe(conversationId);
+      client.unbind("messages:new", messageHandler);
+      client.unbind("messages:update", updateMessageHandler);
+      client.unbind("typing", typingHandler);
+    };
+  }, [conversationId]);
 
-	useEffect(() => {
-		axios.post(`/api/conversations/${conversationId}/seen`);
+  useEffect(() => {
+    axios.post(`/api/conversations/${conversationId}/seen`);
+    return () => {};
+  }, [conversationId]);
 
-		return () => {};
-	}, [conversationId]);
+  const filteredMessages = searchQuery
+    ? messages.filter((m) =>
+        m.body?.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : messages;
 
-	return (
-		<div className="flex-1 overflow-y-auto">
-			{messages.map((message, i) => (
-				<MessageBox
-					key={message.id}
-					isLast={i === messages.length - 1}
-					data={message}
-				/>
-			))}
-			<div className="pt-24" ref={bottomRef} />
-		</div>
-	);
+  return (
+    <div className="flex-1 overflow-y-auto dark:bg-gray-800">
+      {filteredMessages.length === 0 && searchQuery ? (
+        <div className="flex items-center justify-center h-full text-gray-400 dark:text-gray-500 text-sm">
+          &quot;{searchQuery}&quot; 검색 결과가 없습니다.
+        </div>
+      ) : (
+        filteredMessages.map((message, i) => (
+          <MessageBox
+            key={message.id}
+            isLast={i === filteredMessages.length - 1}
+            data={message}
+            highlight={searchQuery}
+          />
+        ))
+      )}
+      {typingUsers.length > 0 && (
+        <div className="px-6 pb-2 text-xs text-gray-500 dark:text-gray-400 italic">
+          {typingUsers.join(', ')}이(가) 입력 중...
+        </div>
+      )}
+      <div className="pt-24" ref={bottomRef} />
+    </div>
+  );
 };
 
 export default Body

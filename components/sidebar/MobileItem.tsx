@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import Link from 'next/link';
 import React from 'react'
 import { IconType } from 'react-icons';
@@ -16,7 +17,16 @@ const MobileItem = ({ href, active, icon: Icon, onClick }: MobileItemProps) => {
   }
 
   return (
-    <Link href={href} onClick={handleClick} className={`group flex gap-x-3 text-sm leading-6 font-semibold w-full justify-center p-4 text-gray-500 hover:text-black hover:bg-gray-100`}><Icon  className='w-6 h-6'/></Link>
+    <Link
+      href={href}
+      onClick={handleClick}
+      className={clsx(
+        `group flex gap-x-3 text-sm leading-6 font-semibold w-full justify-center p-4 hover:text-gray-800 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition`,
+        active ? "text-primary-text dark:text-primary" : "text-gray-500 dark:text-gray-400"
+      )}
+    >
+      <Icon className="w-6 h-6" />
+    </Link>
   )
 }
 
