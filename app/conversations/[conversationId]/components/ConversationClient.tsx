@@ -1,7 +1,7 @@
 "use client"
 
-import { Conversation, Message, User } from '@/app/generated/prisma/client'
-import { FullMessageType } from '@/types'
+import { Conversation, User } from '@/app/generated/prisma/client'
+import { FullMessageType, ReplyPreview } from '@/types'
 import { useState } from 'react'
 import Header from './Header'
 import Body from './Body'
@@ -14,6 +14,7 @@ interface ConversationClientProps {
 
 const ConversationClient = ({ conversation, initialMessages }: ConversationClientProps) => {
   const [searchQuery, setSearchQuery] = useState('')
+  const [replyTo, setReplyTo] = useState<ReplyPreview | null>(null)
 
   return (
     <>
@@ -22,8 +23,15 @@ const ConversationClient = ({ conversation, initialMessages }: ConversationClien
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />
-      <Body initialMessages={initialMessages} searchQuery={searchQuery} />
-      <Form />
+      <Body
+        initialMessages={initialMessages}
+        searchQuery={searchQuery}
+        onReply={setReplyTo}
+      />
+      <Form
+        replyTo={replyTo}
+        onCancelReply={() => setReplyTo(null)}
+      />
     </>
   )
 }

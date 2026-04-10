@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const currentUser = await getCurrentUser()
 
     const body = await request.json()
-    const { message, image, conversationId } = body;
+    const { message, image, conversationId, replyToId } = body;
 
     if (!currentUser?.id || !currentUser?.email) {
       return new NextResponse("Unauthorzed", {status: 401})
@@ -17,21 +17,17 @@ export async function POST(request: Request) {
     const newMessage = await prisma.message.create({
       include: {
         seen: true,
-        sender: true
+        sender: true,
+        replyTo: { include: { sender: true } },
       },
       data: {
         body: message,
         image: image,
-        conversation: {
-          connect: {id: conversationId}
-        },
-        sender: {
-          connect: {id: currentUser.id}
-        },
-        seen: {
-          connect: {id: currentUser.id}
-        }
-      }
+        conversation: { connect: { id: conversationId } },
+        sender: { connect: { id: currentUser.id } },
+        seen: { connect: { id: currentUser.id } },
+        ...(replyToId ? { replyTo: { connect: { id: replyToId } } } : {}),
+      },
     })
 
     const updatedConversation = await prisma.conversation.update({

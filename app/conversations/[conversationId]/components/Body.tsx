@@ -1,7 +1,7 @@
 "use client"
 import useConverSation from '@/hooks/useConversation';
 import { getPusherClient } from '@/libs/pusherClient';
-import { FullMessageType } from '@/types';
+import { FullMessageType, ReplyPreview } from '@/types';
 import axios from 'axios';
 import { find } from "lodash";
 import { useEffect, useRef, useState } from 'react';
@@ -10,6 +10,7 @@ import MessageBox from './MessageBox';
 interface BodyProps {
   initialMessages: FullMessageType[];
   searchQuery?: string;
+  onReply?: (msg: ReplyPreview) => void;
 }
 
 interface TypingUser {
@@ -17,7 +18,7 @@ interface TypingUser {
   isTyping: boolean;
 }
 
-const Body = ({ initialMessages, searchQuery = '' }: BodyProps) => {
+const Body = ({ initialMessages, searchQuery = '', onReply }: BodyProps) => {
   const { conversationId } = useConverSation();
   const [messages, setMessages] = useState<FullMessageType[]>(initialMessages);
   const [typingUsers, setTypingUsers] = useState<string[]>([]);
@@ -39,21 +40,16 @@ const Body = ({ initialMessages, searchQuery = '' }: BodyProps) => {
 
     const updateMessageHandler = (newMessage: FullMessageType) => {
       setMessages((current) =>
-        current.map((currentMessage) => {
-          if (currentMessage.id === newMessage.id) return newMessage;
-          return currentMessage;
-        }),
+        current.map((m) => (m.id === newMessage.id ? newMessage : m)),
       );
     };
 
     const typingHandler = ({ userName, isTyping }: TypingUser) => {
       setTypingUsers((prev) => {
-        if (isTyping) {
-          return prev.includes(userName) ? prev : [...prev, userName]
-        }
-        return prev.filter((u) => u !== userName)
-      })
-    }
+        if (isTyping) return prev.includes(userName) ? prev : [...prev, userName];
+        return prev.filter((u) => u !== userName);
+      });
+    };
 
     client.bind("messages:new", messageHandler);
     client.bind("messages:update", updateMessageHandler);
@@ -73,9 +69,7 @@ const Body = ({ initialMessages, searchQuery = '' }: BodyProps) => {
   }, [conversationId]);
 
   const filteredMessages = searchQuery
-    ? messages.filter((m) =>
-        m.body?.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    ? messages.filter((m) => m.body?.toLowerCase().includes(searchQuery.toLowerCase()))
     : messages;
 
   return (
@@ -91,6 +85,7 @@ const Body = ({ initialMessages, searchQuery = '' }: BodyProps) => {
             isLast={i === filteredMessages.length - 1}
             data={message}
             highlight={searchQuery}
+            onReply={onReply}
           />
         ))
       )}

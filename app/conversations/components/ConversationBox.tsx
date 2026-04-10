@@ -9,6 +9,7 @@ import React, { useMemo } from 'react'
 import { format } from "date-fns"
 import { MdOutlinePushPin } from "react-icons/md";
 
+
 interface ConversationBoxProps {
   data: FullConversationType;
   selected?: boolean;
@@ -38,6 +39,14 @@ const ConversationBox = ({ data, selected, pinned, onPin }: ConversationBoxProps
     if (!userEmail) return false
     return seenArray.filter((user) => user.email === userEmail).length !== 0
   }, [lastMessage, userEmail])
+
+  const unreadCount = useMemo(() => {
+    if (!userEmail) return 0
+    return data.messages.filter((m) =>
+      m.sender?.email !== userEmail &&
+      !m.seen?.some((u) => u.email === userEmail)
+    ).length
+  }, [data.messages, userEmail])
 
   const handleClick = () => {
     router.push(`/conversations/${data.id}`)
@@ -72,11 +81,18 @@ const ConversationBox = ({ data, selected, pinned, onPin }: ConversationBoxProps
 								/>
 							)}
 						</div>
-						{lastMessage?.createdAt && (
-							<p className="text-xs font-light text-gray-400">
-								{format(new Date(lastMessage.createdAt), "p")}
-							</p>
-						)}
+						<div className="flex items-center gap-1.5 shrink-0">
+							{lastMessage?.createdAt && (
+								<p className="text-xs font-light text-gray-400">
+									{format(new Date(lastMessage.createdAt), "p")}
+								</p>
+							)}
+							{unreadCount > 0 && (
+								<span className="inline-flex items-center justify-center min-w-4.5 h-4.5 px-1 text-xs font-bold text-gray-800 bg-primary rounded-full">
+									{unreadCount > 99 ? '99+' : unreadCount}
+								</span>
+							)}
+						</div>
 					</div>
 					<p
 						className={clsx(
