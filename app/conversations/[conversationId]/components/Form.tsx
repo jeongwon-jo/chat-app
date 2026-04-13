@@ -75,13 +75,13 @@ const Form = ({ replyTo, onCancelReply }: FormProps) => {
       )}
 
       <div className="flex items-center w-full gap-2 px-4 py-4 lg:gap-4">
+        <CldUploadButton options={{ maxFiles: 1 }} onSuccess={handleUpload} uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET}>
+          <HiPhoto size={30} className="text-primary-text dark:text-primary" />
+        </CldUploadButton>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex items-center w-full gap-2 lg:gap-4"
         >
-          <CldUploadButton options={{ maxFiles: 1 }} onSuccess={handleUpload} uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET}>
-            <HiPhoto size={30} className="text-primary-text dark:text-primary" />
-          </CldUploadButton>
           <MessageInput
             id="message"
             register={register}

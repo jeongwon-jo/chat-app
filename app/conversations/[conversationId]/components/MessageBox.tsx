@@ -72,12 +72,7 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
   };
 
   return (
-		<div
-			className={clsx(
-				"flex gap-3 px-4 pt-3 pb-1 group",
-				isOwn && "justify-end",
-			)}
-		>
+		<div className={clsx("flex gap-3 px-4 pt-3 pb-1", isOwn && "justify-end")}>
 			{/* 상대방 아바타 */}
 			{!isOwn && (
 				<div className="shrink-0 self-end mb-5">
@@ -107,18 +102,50 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 				)}
 
 				{/* 메시지 버블 + 액션 버튼 */}
-				<div
-					className={clsx(
-						"flex items-end gap-1.5",
-						isOwn && "flex-row-reverse",
+				<div className={`group/bubble flex flex-col ${isOwn ? "items-end": ""}`}>
+					{/* 버블 */}
+					{isDeleted ? (
+						<div className="text-sm text-gray-400 dark:text-gray-500 italic px-3 py-2 border border-dashed border-gray-300 dark:border-gray-600 rounded-full">
+							삭제된 메시지입니다.
+						</div>
+					) : (
+						<div
+							className={clsx(
+								"text-sm w-fit overflow-hidden",
+								isOwn
+									? "bg-primary text-gray-800"
+									: "bg-gray-100 dark:bg-gray-700 dark:text-gray-100",
+								data.image ? "rounded-xl p-0" : "rounded-2xl py-2 px-3",
+							)}
+						>
+							<ImageModal
+								src={data.image!}
+								isOpen={imageModalOpen}
+								onClose={() => setImageModalOpen(false)}
+							/>
+							{data.image ? (
+								<Image
+									alt="Image"
+									height={288}
+									width={288}
+									onClick={() => setImageModalOpen(true)}
+									src={data.image}
+									className="object-cover transition cursor-pointer hover:scale-110 rounded-xl"
+								/>
+							) : (
+								<div>
+									{data.body ? highlightText(data.body, highlight) : null}
+								</div>
+							)}
+						</div>
 					)}
-				>
-					{/* 액션 버튼 (호버 시 표시) */}
+
+					{/* 액션 버튼 (버블 호버 시 아래 표시) */}
 					{!isDeleted && (
 						<div
 							className={clsx(
-								"flex items-center gap-0.5 hidden group-hover:flex transition-opacity mb-1 shrink-0",
-								isOwn ? "flex-row-reverse" : "flex-row",
+								"hidden group-hover/bubble:flex items-center gap-0.5 mt-1",
+								isOwn ? "justify-end" : "justify-start",
 							)}
 						>
 							{/* 답장 */}
@@ -172,45 +199,6 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 							)}
 						</div>
 					)}
-
-					{/* 버블 */}
-					<div className="flex flex-col items-end">
-						{isDeleted ? (
-							<div className="text-sm text-gray-400 dark:text-gray-500 italic px-3 py-2 border border-dashed border-gray-300 dark:border-gray-600 rounded-full">
-								삭제된 메시지입니다.
-							</div>
-						) : (
-							<div
-								className={clsx(
-									"text-sm w-fit overflow-hidden",
-									isOwn
-										? "bg-primary text-gray-800"
-										: "bg-gray-100 dark:bg-gray-700 dark:text-gray-100",
-									data.image ? "rounded-xl p-0" : "rounded-2xl py-2 px-3",
-								)}
-							>
-								<ImageModal
-									src={data.image!}
-									isOpen={imageModalOpen}
-									onClose={() => setImageModalOpen(false)}
-								/>
-								{data.image ? (
-									<Image
-										alt="Image"
-										height={288}
-										width={288}
-										onClick={() => setImageModalOpen(true)}
-										src={data.image}
-										className="object-cover transition cursor-pointer hover:scale-110 rounded-xl"
-									/>
-								) : (
-									<div>
-										{data.body ? highlightText(data.body, highlight) : null}
-									</div>
-								)}
-							</div>
-						)}
-					</div>
 				</div>
 
 				{/* 이모지 반응 집계 */}
