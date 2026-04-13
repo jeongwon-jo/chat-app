@@ -2,11 +2,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #9FD0FF;
-  --color-primary-hover: #7BBCFF;
-  --color-primary-text: #3A8FCC;
-  --color-secondary: #C6E5FF;
-  --color-secondary-hover: #AAD9FF;
+  --color-primary: #FFB84D;
+  --color-primary-hover: #FFA726;
+  --color-primary-text: #3A2000;
+
+  --color-secondary: #FEE500;
+  --color-secondary-hover: #E6CF00;
+  --color-secondary-text: #191919;
 }
 
 @variant dark (&:where(.dark, .dark *));

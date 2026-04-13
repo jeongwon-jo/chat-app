@@ -1,15 +1,13 @@
 "use client"
 
+import Button from '@/components/Button'
+import Input from '@/components/inputs/Input'
+import axios from "axios"
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
-import axios from "axios"
 import toast from 'react-hot-toast'
-import Input from '@/components/inputs/Input'
-import Button from '@/components/Button'
-import AuthSocialButton from './AuthSocialButton'
-import {BsGithub, BsGoogle} from "react-icons/bs"
 
 type Varient = "LOGIN" | "REGISTER"
 const AuthForm = () => {
@@ -119,7 +117,7 @@ const AuthForm = () => {
 				</h2>
 			</div>
 			<div className={`mt-8 sm:mx-auto sm:w-full sm:max-w-md`}>
-				<div className="px-4 py-8 bg-white sm:rounded-lg sm:px-10">
+				<div className="px-4 py-8 bg-white sm:px-10">
 					<form
 						action=""
 						onSubmit={handleSubmit(onSubmit)}
@@ -160,7 +158,7 @@ const AuthForm = () => {
 						</div>
 					</form>
 					<div className="mt-6">
-						<div className="relative">
+						{/* <div className="relative">
 							<div className={`absolute inset-0 flex items-center`}>
 								<div className={`w-full border-t border-gray-300`} />
 							</div>
@@ -179,7 +177,7 @@ const AuthForm = () => {
 								icon={BsGoogle}
 								onClick={() => socialAction("google")}
 							/>
-						</div>
+						</div> */}
 						<div className="flex justify-center gap-2 px-2 mt-6 text-sm text-gray-500">
 							<div>
 								{varient === "LOGIN"
