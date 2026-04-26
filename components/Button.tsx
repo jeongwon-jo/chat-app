@@ -9,6 +9,7 @@ interface ButtonProps {
   secondary?: boolean;
   danger?: boolean;
   disabled?: boolean;
+  className?: string;
 }
 const Button: React.FC<ButtonProps> = ({
   type = "button",
@@ -17,7 +18,8 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   secondary,
   danger,
-  disabled
+  disabled,
+  className
 }) => {
   return (
     <button
@@ -25,12 +27,12 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       onClick={onClick}
       className={clsx(
-        `flex justify-center px-3 py-4 text-md rounded-sm font-semibold focus-visible:outline focus-visible:outline-offset-2`,
+        `flex justify-center px-3 py-3 text-md font-semibold focus-visible:outline focus-visible:outline-offset-2 transition ${className}`,
         disabled && "opacity-50 cursor-default",
         fullWidth && "w-full",
-        secondary ? "text-gray-900 dark:text-gray-100" : "text-gray-800",
-        danger && "bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600 text-white",
-        !secondary && !danger && "bg-primary hover:bg-primary-hover focus-visible:outline-primary"
+        secondary && "bg-secondary text-secondary-text hover:bg-secondary-hover",
+        danger && "bg-rose-600 hover:bg-rose-700 focus-visible:outline-rose-700 text-white",
+        !secondary && !danger && "bg-primary hover:bg-primary-hover text-primary-text focus-visible:outline-primary"
       )}
     >
       {children}

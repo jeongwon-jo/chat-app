@@ -1,15 +1,14 @@
 "use client"
 
-import { Conversation, User } from '@prisma/client'
 import Avatar from '@/components/Avatar';
 import AvatarGroup from '@/components/AvatarGroup';
 import useActiveList from '@/hooks/useActiveList';
-import useOtherUser from '@/hooks/useOtheruser'
+import useOtherUser from '@/hooks/useOtheruser';
+import { Conversation, User } from '@prisma/client';
 import Link from 'next/link';
-import React, { useMemo, useState } from 'react'
-import { HiChevronLeft, HiEllipsisHorizontal, HiMagnifyingGlass, HiXMark } from "react-icons/hi2"
+import { useMemo, useState } from 'react';
+import { HiChevronLeft, HiEllipsisHorizontal, HiMagnifyingGlass, HiXMark } from "react-icons/hi2";
 import ProfileDrawer from './ProfileDrawer';
-
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -18,6 +17,7 @@ interface HeaderProps {
   onSearchChange?: (q: string) => void;
   searchQuery?: string;
 }
+
 const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps) => {
   const otherUser = useOtherUser(conversation)
   const { members } = useActiveList()
@@ -40,12 +40,12 @@ const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps)
   return (
     <>
       <ProfileDrawer data={conversation} isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
-      <div className="bg-white dark:bg-gray-900 w-full border-b border-b-gray-100 dark:border-b-gray-700 shadow-sm">
+      <div className="bg-gray-100 w-full border-b border-b-gray-300">
         <div className="flex justify-between items-center sm:px-4 py-3 px-4 lg:px-6">
           <div className="flex items-center gap-3">
             <Link
               href="/conversations"
-              className="block text-primary-text dark:text-primary transition cursor-pointer lg:hidden hover:opacity-75"
+              className="block text-gray-600 transition cursor-pointer lg:hidden hover:text-gray-100"
             >
               <HiChevronLeft size={32} />
             </Link>
@@ -55,8 +55,8 @@ const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps)
               <Avatar user={otherUser} />
             )}
             <div className="flex flex-col">
-              <div className="dark:text-gray-100">{conversation.name || otherUser.name}</div>
-              <div className="text-sm font-light text-neutral-500 dark:text-gray-400">
+              <div className="text-gray-900">{conversation.name || otherUser.name}</div>
+              <div className="text-sm font-light text-gray-500">
                 {statusText}
               </div>
             </div>
@@ -64,7 +64,7 @@ const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps)
           <div className="flex items-center gap-2">
             <button
               onClick={handleSearchToggle}
-              className="text-primary-text dark:text-primary transition cursor-pointer hover:opacity-75"
+              className="text-gray-500 transition cursor-pointer hover:text-gray-200"
               title="메시지 검색"
             >
               {searchOpen ? <HiXMark size={26} /> : <HiMagnifyingGlass size={24} />}
@@ -72,7 +72,7 @@ const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps)
             <HiEllipsisHorizontal
               size={32}
               onClick={() => setDrawerOpen(true)}
-              className="text-primary-text dark:text-primary transition cursor-pointer hover:opacity-75"
+              className="text-gray-500 transition cursor-pointer hover:text-gray-200"
             />
           </div>
         </div>
@@ -84,7 +84,7 @@ const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps)
               placeholder="메시지 검색..."
               value={searchQuery}
               onChange={(e) => onSearchChange?.(e.target.value)}
-              className="w-full px-3 py-3 text-sm bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:border-2 focus:border-primary"
+              className="w-full px-3 py-3 text-sm bg-[#f0f0f0] border border-[#b3b3b3] text-gray-100 placeholder:text-gray-600 focus:outline-none focus:border-gray-500"
             />
           </div>
         )}

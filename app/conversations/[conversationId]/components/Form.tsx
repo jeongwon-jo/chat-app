@@ -1,15 +1,14 @@
 "use client"
 
 import useConverSation from '@/hooks/useConversation'
+import { ReplyPreview } from '@/types'
 import axios from 'axios'
-import { CldUploadButton, CloudinaryUploadWidgetResults, CloudinaryUploadWidgetInfo } from "next-cloudinary"
+import { CldUploadButton, CloudinaryUploadWidgetInfo, CloudinaryUploadWidgetResults } from "next-cloudinary"
 import { useCallback, useRef } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-import { HiPaperAirplane } from 'react-icons/hi'
+import { HiPaperAirplane, HiReply } from 'react-icons/hi'
 import { HiPhoto, HiXMark } from 'react-icons/hi2'
-import { HiReply } from 'react-icons/hi'
 import MessageInput from './MessageInput'
-import { ReplyPreview } from '@/types'
 
 interface FormProps {
   replyTo?: ReplyPreview | null;
@@ -57,18 +56,18 @@ const Form = ({ replyTo, onCancelReply }: FormProps) => {
   }, [conversationId])
 
   return (
-    <div className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+    <div className="bg-gray-100 border-t border-gray-300">
       {/* 답장 대상 미리보기 */}
       {replyTo && (
-        <div className="flex items-center justify-between px-4 pt-2 pb-1 gap-2 text-sm border-l-2 border-primary-text dark:border-primary bg-gray-50 dark:bg-gray-800">
-          <div className="flex items-center gap-1.5 min-w-0">
-            <HiReply size={14} className="text-primary-text dark:text-primary shrink-0" />
-            <span className="font-medium text-primary-text dark:text-primary shrink-0">{replyTo.sender.name}</span>
-            <span className="text-gray-500 dark:text-gray-400 truncate">
+        <div className="flex items-center justify-between px-5 pt-2 pb-2 gap-2 text-sm border-l-2 border-gray-800 bg-gray-500">
+          <div className="flex items-center gap-3 min-w-0">
+            <HiReply size={14} className="text-gray-400 shrink-0" />
+            <span className="font-medium text-gray-300 shrink-0">{replyTo.sender.name}</span>
+            <span className="text-gray-100 truncate">
               {replyTo.image ? '📷 이미지' : replyTo.body}
             </span>
           </div>
-          <button onClick={onCancelReply} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 shrink-0">
+          <button onClick={onCancelReply} className="text-gray-100 shrink-0">
             <HiXMark size={16} />
           </button>
         </div>
@@ -76,7 +75,7 @@ const Form = ({ replyTo, onCancelReply }: FormProps) => {
 
       <div className="flex items-center w-full gap-2 px-4 py-4 lg:gap-4">
         <CldUploadButton options={{ maxFiles: 1 }} onSuccess={handleUpload} uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET}>
-          <HiPhoto size={30} className="text-primary-text dark:text-primary" />
+          <HiPhoto size={24} className="text-gray-500 hover:text-gray-300 transition" />
         </CldUploadButton>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -92,9 +91,9 @@ const Form = ({ replyTo, onCancelReply }: FormProps) => {
           />
           <button
             type="submit"
-            className="p-2 transition rounded-full cursor-pointer bg-primary hover:bg-primary-hover"
+            className="p-1.5 transition cursor-pointershrink-0"
           >
-            <HiPaperAirplane size={18} className="text-gray-800" />
+            <HiPaperAirplane size={22} className="text-primary-text" />
           </button>
         </form>
       </div>

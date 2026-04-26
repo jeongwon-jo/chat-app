@@ -27,7 +27,7 @@ const highlightText = (text: string, query: string) => {
     <>
       {parts.map((part, i) =>
         part.toLowerCase() === query.toLowerCase()
-          ? <mark key={i} className="bg-yellow-200 dark:bg-yellow-600 rounded px-0.5">{part}</mark>
+          ? <mark key={i} className="bg-yellow-700 text-yellow-100 px-0.5">{part}</mark>
           : part
       )}
     </>
@@ -90,7 +90,7 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 				{data.replyTo && !isDeleted && (
 					<div
 						className={clsx(
-							"text-xs px-3 py-1.5 rounded-lg border-l-2 border-primary-text dark:border-primary bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 max-w-xs truncate",
+							"text-xs px-3 py-1.5 border-l-2 border-gray-500 bg-[#1e1e1e] text-gray-400 max-w-xs truncate",
 							isOwn && "self-end",
 						)}
 					>
@@ -105,7 +105,7 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 				<div className={`group/bubble flex flex-col ${isOwn ? "items-end": ""}`}>
 					{/* 버블 */}
 					{isDeleted ? (
-						<div className="text-sm text-gray-400 dark:text-gray-500 italic px-3 py-2 border border-dashed border-gray-300 dark:border-gray-600 rounded-full">
+						<div className="text-sm text-gray-600 italic px-3 py-2 border border-dashed border-[#2e2e2e]">
 							삭제된 메시지입니다.
 						</div>
 					) : (
@@ -113,9 +113,9 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 							className={clsx(
 								"text-sm w-fit overflow-hidden",
 								isOwn
-									? "bg-primary text-gray-800"
-									: "bg-gray-100 dark:bg-gray-700 dark:text-gray-100",
-								data.image ? "rounded-xl p-0" : "rounded-2xl py-2 px-3",
+									? "bg-primary text-primary-text"
+									: "bg-[#1e1e1e] text-gray-200",
+								data.image ? "p-0" : "py-2 px-3",
 							)}
 						>
 							<ImageModal
@@ -130,7 +130,7 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 									width={288}
 									onClick={() => setImageModalOpen(true)}
 									src={data.image}
-									className="object-cover transition cursor-pointer hover:scale-110 rounded-xl"
+									className="object-cover transition cursor-pointer hover:scale-110"
 								/>
 							) : (
 								<div>
@@ -151,7 +151,7 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 							{/* 답장 */}
 							<button
 								onClick={handleReply}
-								className="p-1.5 rounded-full text-gray-400 hover:text-primary-text dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+								className="p-1.5 text-gray-600 hover:text-gray-200 hover:bg-[#1e1e1e] transition"
 								title="답장"
 							>
 								<HiReply size={14} />
@@ -161,7 +161,7 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 							<div className="relative">
 								<button
 									onClick={() => setShowEmojiPicker((v) => !v)}
-									className="p-1.5 rounded-full text-gray-400 hover:text-primary-text dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm leading-none"
+									className="p-1.5 text-gray-600 hover:text-gray-200 hover:bg-[#1e1e1e] transition text-sm leading-none"
 									title="반응"
 								>
 									😊
@@ -170,7 +170,7 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 									<div
 										ref={pickerRef}
 										className={clsx(
-											"absolute bottom-full mb-1 flex gap-1 bg-white dark:bg-gray-800 rounded-full shadow-lg px-2 py-1 border border-gray-100 dark:border-gray-700 z-10",
+											"absolute bottom-full mb-1 flex gap-1 bg-[#1a1a1a] shadow-lg px-2 py-1 border border-[#2e2e2e] z-10",
 											isOwn ? "right-0" : "left-0",
 										)}
 									>
@@ -191,7 +191,7 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 							{isOwn && (
 								<button
 									onClick={handleDelete}
-									className="p-1.5 rounded-full text-gray-400 hover:text-rose-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+									className="p-1.5 text-gray-600 hover:text-rose-500 hover:bg-[#1e1e1e] transition"
 									title="삭제"
 								>
 									<HiTrash size={14} />
@@ -209,10 +209,10 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 								key={emoji}
 								onClick={() => handleReact(emoji)}
 								className={clsx(
-									"flex items-center gap-0.5 text-xs px-1.5 py-0.5 rounded-full border transition",
+									"flex items-center gap-0.5 text-xs px-1.5 py-0.5 border transition",
 									mine
-										? "bg-secondary dark:bg-gray-600 border-primary-text dark:border-primary text-gray-800 dark:text-gray-100"
-										: "bg-gray-100 dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-primary-text dark:hover:border-primary",
+										? "bg-[#2e2e2e] border-gray-400 text-gray-100"
+										: "bg-[#1a1a1a] border-[#2e2e2e] text-gray-400 hover:border-gray-500",
 								)}
 							>
 								<span>{emoji}</span>
@@ -224,16 +224,16 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
 
 				{/* 발신자 + 시간 */}
 				<div className="flex items-center gap-1">
-					<span className="text-xs text-gray-500 dark:text-gray-400">
+					<span className="text-xs text-gray-600">
 						{data.sender.name}
 					</span>
-					<span className="text-xs text-gray-400 dark:text-gray-500">
+					<span className="text-xs text-gray-700">
 						{format(new Date(data.createdAt), "p")}
 					</span>
 
 					{/* seen 표시 */}
 					{isLast && isOwn && seenList.length > 0 && (
-						<div className="text-xs font-light text-gray-500 text-right mt-0.5">
+						<div className="text-xs font-light text-gray-700 text-right mt-0.5">
 							Seen by {seenList}
 						</div>
 					)}

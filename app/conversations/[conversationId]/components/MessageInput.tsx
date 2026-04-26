@@ -1,4 +1,3 @@
-import React from 'react'
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface MessageInputProps {
@@ -31,7 +30,7 @@ const MessageInput = ({
           onTyping?.()
         }}
         {...rest}
-        className="w-full px-4 py-2 font-light text-black dark:text-gray-100 rounded-full bg-neutral-100 dark:bg-gray-800 focus:outline-none"
+        className="w-full px-4 py-2 font-light text-gray-800 bg-[#ffffff] border border-gray-300 focus:outline-none focus:border-gray-400 placeholder:text-gray-600"
       />
     </div>
   );

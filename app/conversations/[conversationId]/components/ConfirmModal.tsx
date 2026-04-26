@@ -35,13 +35,13 @@ const ConfirmModal = ({ isOpen, onClose }: ConfirmModalProps) => {
   return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<div className="sm:flex sm:items-start">
-				<div className="flex items-center justify-center shrink-0 w-12 h-12 mx-auto bg-red-100 rounded-full sm:mx-0 sm:h-10 sm:w-10">
-					<FiAlertTriangle className="w-6 h-6 text-red-600 " />
+				<div className="flex items-center justify-center shrink-0 w-12 h-12 mx-auto bg-[#2a1515] sm:mx-0 sm:h-10 sm:w-10">
+					<FiAlertTriangle className="w-6 h-6 text-red-500" />
 				</div>
 				<div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
 					<DialogTitle
 						as="h3"
-						className={"text-base font-semibold leading-6 text-gray-900"}
+						className={"text-base font-semibold leading-6 text-gray-100"}
 					>
 						대화 삭제
 					</DialogTitle>

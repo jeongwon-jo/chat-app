@@ -1,18 +1,18 @@
 import { User } from '@prisma/client';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import axios from 'axios';
 import {
 	CldUploadButton,
-	CloudinaryUploadWidgetResults,
 	CloudinaryUploadWidgetInfo,
+	CloudinaryUploadWidgetResults,
 } from "next-cloudinary";
-import axios from 'axios';
+import Image from "next/image";
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import Modal from '../modals/Modal';
-import Input from '../inputs/Input';
-import Image from "next/image"
 import Button from '../Button';
+import Input from '../inputs/Input';
+import Modal from '../modals/Modal';
 
 interface SettingsModalProps {
   isOpen?: boolean;
@@ -59,20 +59,20 @@ const SettingsModal = ({
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<form action="" onSubmit={handleSubmit(onSubmit)}>
 				<div className='space-y-12'>
-					<div className='pb-12 border-b border-gray-900/10'>
-						<h2 className='text-base font-semibold leading-7 text-gray-900 dark:text-gray-100'>프로필</h2>
-						<p className='mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400'>프로필을 수정하세요.</p>
-						<div className='flex flex-col mt-10 gap-y-8'>
+					<>
+						<h2 className='text-base font-semibold leading-7 text-gray-100'>프로필</h2>
+						<p className='mt-1 text-sm leading-6 text-gray-500'>프로필을 수정하세요.</p>
+						<div className='flex flex-col mt-6 gap-y-6'>
 							<Input
 								disabled={isLoading}
-								label="Name"
+								label="이름"
 								id="name"
 								errors={errors}
 								required
 								register={register}
 							/>
 							<div>
-								<label htmlFor="" className='block text-sm font-medium leading-6 text-gray-900'>Photo</label>
+								<label htmlFor="" className='block text-sm font-medium leading-6 text-gray-300'>프로필 이미지</label>
 								<div className='flex items-center mt-2 gap-x-3'>
 									<Image
 										width={48}
@@ -90,17 +90,17 @@ const SettingsModal = ({
 											process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET
 										}
 									>
-										<Button disabled={isLoading} secondary type="button">
-											Change
+										<Button disabled={isLoading} secondary type="button" className='py-2!'>
+											이미지 변경
 										</Button>
 									</CldUploadButton>
 								</div>
 							</div>
 						</div>
-          </div>
-          <div className='flex items-center justify-end gap-x-6 mt-5 '>
-            <Button disabled={isLoading} secondary onClick={onClose}>Cancel</Button>
-            <Button disabled={isLoading} type='submit'>Save</Button>
+          </>
+          <div className='flex items-center justify-end gap-x-3 mt-3'>
+            <Button disabled={isLoading} secondary onClick={onClose} className="py-2!">취소</Button>
+            <Button disabled={isLoading} type='submit' className='py-2!'>저장</Button>
           </div>
 				</div>
 			</form>

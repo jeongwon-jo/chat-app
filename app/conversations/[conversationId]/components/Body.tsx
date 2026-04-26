@@ -73,9 +73,9 @@ const Body = ({ initialMessages, searchQuery = '', onReply }: BodyProps) => {
     : messages;
 
   return (
-    <div className="flex-1 overflow-y-auto dark:bg-gray-800">
+    <div className="flex-1 overflow-y-auto bg-gray-50">
       {filteredMessages.length === 0 && searchQuery ? (
-        <div className="flex items-center justify-center h-full text-gray-400 dark:text-gray-500 text-sm">
+        <div className="flex items-center justify-center h-full text-gray-600 text-sm">
           &quot;{searchQuery}&quot; 검색 결과가 없습니다.
         </div>
       ) : (
@@ -90,7 +90,7 @@ const Body = ({ initialMessages, searchQuery = '', onReply }: BodyProps) => {
         ))
       )}
       {typingUsers.length > 0 && (
-        <div className="px-6 pb-2 text-xs text-gray-500 dark:text-gray-400 italic">
+        <div className="px-6 pb-2 text-xs text-gray-600 italic">
           {typingUsers.join(', ')}이(가) 입력 중...
         </div>
       )}

@@ -65,14 +65,14 @@ const ProfileDrawer = ({ isOpen, onClose, data }: ProfileDrawerProps) => {
                   leaveTo="translate-x-full"
                 >
                   <DialogPanel className="w-screen max-w-md pointer-events-auto">
-                    <div className="flex flex-col py-6 h-full bg-white dark:bg-gray-900 shadow-xl overflow-y-auto">
+                    <div className="flex flex-col py-6 h-full bg-[#111111] shadow-xl overflow-y-auto">
                       <div className="px-4 sm:px-6">
                         <div className="flex items-start justify-end">
                           <div className="flex items-center ml-3 h-7">
                             <button
                               type="button"
                               onClick={onClose}
-                              className="text-gray-400 dark:text-gray-500 bg-white dark:bg-gray-900 rounded-md hover:text-gray-500 dark:hover:text-gray-300 focus:border-2 focus:border-primary"
+                              className="text-gray-500 bg-transparent hover:text-gray-200 focus:outline-none"
                             >
                               <span className="sr-only">Close Panel</span>
                               <IoClose size={24} />
@@ -89,17 +89,17 @@ const ProfileDrawer = ({ isOpen, onClose, data }: ProfileDrawerProps) => {
                               <Avatar user={otherUser} />
                             )}
                           </div>
-                          <div className="dark:text-gray-100">{title}</div>
-                          <div className="text-sm text-gray-500 dark:text-gray-400">{statusText}</div>
+                          <div className="text-gray-100">{title}</div>
+                          <div className="text-sm text-gray-500">{statusText}</div>
                           <div className="flex gap-10 my-8">
                             <div
                               className="flex flex-col items-center gap-3 cursor-pointer hover:opacity-75"
                               onClick={() => setConfirmOpen(true)}
                             >
-                              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-neutral-100 dark:bg-gray-700">
-                                <IoTrash className="dark:text-gray-300" />
+                              <div className="flex items-center justify-center w-10 h-10 bg-[#1e1e1e]">
+                                <IoTrash className="text-gray-400" />
                               </div>
-                              <div className="text-sm font-light text-neutral-600 dark:text-gray-400">Delete</div>
+                              <div className="text-sm font-light text-gray-500">Delete</div>
                             </div>
                           </div>
                         </div>
@@ -107,24 +107,24 @@ const ProfileDrawer = ({ isOpen, onClose, data }: ProfileDrawerProps) => {
                           <dl className="px-4 space-y-8 sm:space-y-6 sm:px-6">
                             {data.isGroup && (
                               <div>
-                                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 sm:w-40 sm:shrink-0">Emails</dt>
-                                <dd className="mt-1 text-sm text-gray-900 dark:text-gray-200 sm:col-span-2">
+                                <dt className="text-sm font-medium text-gray-600 sm:w-40 sm:shrink-0">Emails</dt>
+                                <dd className="mt-1 text-sm text-gray-300 sm:col-span-2">
                                   {data.users.map((user) => user.email).join(", ")}
                                 </dd>
                               </div>
                             )}
                             {!data.isGroup && (
                               <div>
-                                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 sm:w-40 sm:shrink-0">Emails</dt>
-                                <dd className="mt-1 text-sm text-gray-900 dark:text-gray-200 sm:col-span-2">{otherUser.email}</dd>
+                                <dt className="text-sm font-medium text-gray-600 sm:w-40 sm:shrink-0">Emails</dt>
+                                <dd className="mt-1 text-sm text-gray-300 sm:col-span-2">{otherUser.email}</dd>
                               </div>
                             )}
                             {!data.isGroup && (
                               <>
-                                <hr className="dark:border-gray-700" />
+                                <hr className="border-[#1e1e1e]" />
                                 <div>
-                                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 sm:w-40 sm:shrink-0">Joined</dt>
-                                  <dd className="mt-1 text-sm text-gray-900 dark:text-gray-200 sm:col-span-2">
+                                  <dt className="text-sm font-medium text-gray-600 sm:w-40 sm:shrink-0">Joined</dt>
+                                  <dd className="mt-1 text-sm text-gray-300 sm:col-span-2">
                                     <time dateTime={joinedDate}>{joinedDate}</time>
                                   </dd>
                                 </div>

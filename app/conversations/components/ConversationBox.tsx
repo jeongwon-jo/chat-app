@@ -1,12 +1,12 @@
 import Avatar from '@/components/Avatar';
 import AvatarGroup from '@/components/AvatarGroup';
 import useOtherUser from '@/hooks/useOtheruser';
-import { FullConversationType } from '@/types'
+import { FullConversationType } from '@/types';
 import clsx from 'clsx';
+import { format } from "date-fns";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import React, { useMemo } from 'react'
-import { format } from "date-fns"
+import { useMemo } from 'react';
 import { MdOutlinePushPin } from "react-icons/md";
 
 
@@ -56,10 +56,10 @@ const ConversationBox = ({ data, selected, pinned, onPin }: ConversationBoxProps
 		<div
 			onClick={handleClick}
 			className={clsx(
-				`w-full relative flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-gray-800 transition cursor-pointer mb-3 group`,
+				`w-full relative flex items-center gap-2.5 p-3 pr-4 hover:bg-[#1a1a1a] transition cursor-pointer mb-1 group`,
 				selected
-					? "bg-neutral-200 dark:bg-gray-700"
-					: "bg-white dark:bg-gray-900",
+					? "bg-[#1e1e1e]"
+					: "bg-transparent",
 			)}
 		>
 			{data.isGroup ? (
@@ -70,14 +70,19 @@ const ConversationBox = ({ data, selected, pinned, onPin }: ConversationBoxProps
 			<div className="flex-1 min-w-0">
 				<div className="focus:outline-none">
 					<div className="flex items-center justify-between mb-1">
-						<div className="flex items-center gap-1">
-							<p className="font-medium text-gray-900 dark:text-gray-100 text-md">
+						<div className="flex items-center gap-2">
+							<p className="font-medium text-gray-100 text-sm">
 								{data.name || otherUser.name}
 							</p>
+							{unreadCount > 0 && (
+								<span className="inline-flex items-center rounded-full justify-center size-4 text-xs font-bold text-gray-900 bg-primary">
+									{unreadCount > 99 ? '99+' : unreadCount}
+								</span>
+							)}
 							{pinned && (
 								<MdOutlinePushPin
 									size={12}
-									className="text-primary-text dark:text-primary shrink-0"
+									className="text-gray-100 shrink-0"
 								/>
 							)}
 						</div>
@@ -87,19 +92,14 @@ const ConversationBox = ({ data, selected, pinned, onPin }: ConversationBoxProps
 									{format(new Date(lastMessage.createdAt), "p")}
 								</p>
 							)}
-							{unreadCount > 0 && (
-								<span className="inline-flex items-center justify-center min-w-4.5 h-4.5 px-1 text-xs font-bold text-gray-800 bg-primary rounded-full">
-									{unreadCount > 99 ? '99+' : unreadCount}
-								</span>
-							)}
 						</div>
 					</div>
 					<p
 						className={clsx(
 							`truncate text-sm`,
 							hasSeen
-								? "text-gray-500 dark:text-gray-400"
-								: "text-black dark:text-gray-200 font-medium",
+								? "text-gray-300"
+								: "text-gray-100 font-medium",
 						)}
 					>
 						{lastMessageText}
@@ -112,10 +112,10 @@ const ConversationBox = ({ data, selected, pinned, onPin }: ConversationBoxProps
 					onPin?.(data.id);
 				}}
 				className={clsx(
-					`shrink-0 p-1 rounded-full transition opacity-0 group-hover:opacity-100`,
+					`shrink-0 p-1 transition hidden group-hover:block`,
 					pinned
-						? "text-primary-text dark:text-primary bg-secondary dark:bg-gray-700"
-						: "text-gray-400 dark:text-gray-500 hover:text-primary-text dark:hover:text-primary hover:bg-secondary dark:hover:bg-gray-700",
+						? "text-gray-100 bg-[#2e2e2e]"
+						: "text-gray-600 hover:text-gray-200 hover:bg-[#2e2e2e]",
 				)}
 				title={pinned ? "고정 해제" : "고정"}
 			>

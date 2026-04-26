@@ -1,12 +1,11 @@
-import type { Metadata } from "next";
-import "./globals.css";
 import AuthContext from "@/context/AuthContext";
 import ToasterContext from "@/context/ToasterContext";
-import { ThemeProvider } from "@/context/ThemeContext";
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Hi Chat",
-  description: "Chatting App",
+  description: "Hi Chat — 실시간 채팅 서비스",
 };
 
 export default function RootLayout({
@@ -17,12 +16,10 @@ export default function RootLayout({
   return (
     <html lang="ko" className="h-full antialiased">
       <body className="h-full">
-        <ThemeProvider>
-          <AuthContext>
-            <ToasterContext />
-            {children}
-          </AuthContext>
-        </ThemeProvider>
+        <AuthContext>
+          <ToasterContext />
+          {children}
+        </AuthContext>
       </body>
     </html>
   );

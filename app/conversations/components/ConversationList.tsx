@@ -1,16 +1,17 @@
 "use client"
-import { User } from '@prisma/client';
-import useConverSation from '@/hooks/useConversation';
-import { FullConversationType } from '@/types'
-import React, { useEffect, useMemo, useState } from 'react'
-import { MdOutlineGroupAdd } from "react-icons/md"
-import { HiMagnifyingGlass } from "react-icons/hi2"
-import ConversationBox from './ConversationBox';
-import clsx from 'clsx';
-import { useSession } from 'next-auth/react';
-import { getPusherClient } from '@/libs/pusherClient';
-import { find } from 'lodash';
 import GroupChatModal from '@/components/modals/GroupChatModal';
+import useConverSation from '@/hooks/useConversation';
+import { getPusherClient } from '@/libs/pusherClient';
+import { FullConversationType } from '@/types';
+import { User } from '@prisma/client';
+import clsx from 'clsx';
+import { find } from 'lodash';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import { useEffect, useMemo, useState } from 'react';
+import { HiMagnifyingGlass } from "react-icons/hi2";
+import { MdOutlineGroupAdd } from "react-icons/md";
+import ConversationBox from './ConversationBox';
 
 interface ConversationListProps {
   initialItems: FullConversationType[];
@@ -109,24 +110,24 @@ const ConversationList = ({ initialItems, users, title }: ConversationListProps)
       <GroupChatModal users={users} isOpen={isModalOpen} onClose={() => { setIsModalOpen(false) }} />
       <aside
         className={clsx(
-          `fixed inset-y-0 pb-20 lg:pb-0 lg:left-20 lg:w-80 lg:block overflow-y-auto border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900`,
+          `fixed inset-y-0 pb-20 lg:pb-0 lg:left-20 lg:w-80 lg:block overflow-y-auto border-r border-[#1e1e1e] bg-[#111111]`,
           isOpen ? "hidden" : "block w-full left-0",
         )}
       >
-        <div className="px-5">
+        <div className="px-4">
           <div className="flex justify-between pt-4 mb-4">
-            <div className="text-2xl font-bold text-neutral-800 dark:text-gray-100">채팅 앱</div>
+            <Image src={"/images/logo_white.png"} width={90} height={20} alt='Hi Chat Logo' />
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsSearchOpen((v) => !v)}
-                className="p-2 text-gray-600 dark:text-gray-300 transition bg-gray-200 dark:bg-gray-700 rounded-full cursor-pointer hover:opacity-75"
+                className="p-2 text-gray-100 transition bg-[#1e1e1e] cursor-pointer hover:text-gray-200 hover:bg-secondary"
                 title="대화 검색"
               >
                 <HiMagnifyingGlass size={18} />
               </button>
               <div
                 onClick={() => { setIsModalOpen(true); }}
-                className="p-2 text-gray-600 dark:text-gray-300 transition bg-gray-200 dark:bg-gray-700 rounded-full cursor-pointer hover:opacity-75"
+                className="p-2 text-gray-100 transition bg-[#1e1e1e] cursor-pointer hover:text-gray-200 hover:bg-secondary"
               >
                 <MdOutlineGroupAdd size={20} />
               </div>
@@ -139,22 +140,20 @@ const ConversationList = ({ initialItems, users, title }: ConversationListProps)
                 placeholder="대화 검색..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-3 py-2 text-sm rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-gray-900 text-gray-100 placeholder:text-gray-600 focus:outline-none focus:border-gray-500"
               />
             </div>
           )}
         </div>
-        <div className="px-3">
-          {filteredItems.map((item) => (
-            <ConversationBox
-              key={item.id}
-              data={item}
-              selected={conversationId === item.id}
-              pinned={pinnedIds.includes(item.id)}
-              onPin={togglePin}
-            />
-          ))}
-        </div>
+        {filteredItems.map((item) => (
+          <ConversationBox
+            key={item.id}
+            data={item}
+            selected={conversationId === item.id}
+            pinned={pinnedIds.includes(item.id)}
+            onPin={togglePin}
+          />
+        ))}
       </aside>
     </>
   );

@@ -48,9 +48,9 @@ const GroupChatModal = ({
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className='space-y-12'>
-					<div className='pb-12 border-b border-gray-900/10'>
-						<h2 className='text-base font-semibold leading-7 text-gray-900'>그룹 채팅 만들기</h2>
-						<p className='mt-1 text-sm leading-6 text-gray-600'>2명 이상의 사람들과 채팅을 만드세요</p>
+					<div className='pb-12 border-b border-[#242424]'>
+						<h2 className='text-base font-semibold leading-7 text-gray-100'>그룹 채팅 만들기</h2>
+						<p className='mt-1 text-sm leading-6 text-gray-500'>2명 이상의 사람들과 채팅을 만드세요</p>
 						<div className='flex flex-col mt-10 gap-y-8'>
 							<Input
 								disabled={isLoading}

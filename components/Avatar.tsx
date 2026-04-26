@@ -3,9 +3,10 @@ import Image from 'next/image';
 import React from 'react'
 
 interface AvatarProps {
-  user: User
+  user: User;
+  isActive?: boolean;
 }
-const Avatar = ({ user }: AvatarProps) => {
+const Avatar = ({ user, isActive }: AvatarProps) => {
   return (
 		<div className="relative">
 			<div className="relative inline-block rounded-full h-9 w-9 md:h-11 md:w-11">
@@ -17,9 +18,11 @@ const Avatar = ({ user }: AvatarProps) => {
 						className='rounded-full object-cover'
 					/>
 				</div>
-				<span
-					className={`absolute block rounded-full bg-green-500 ring-2 ring-white top-0 h-2 w-2 md:h-3 md:w-3 right-0`}
-				/>
+				{isActive && (
+					<span
+						className="absolute block rounded-full bg-green-500 ring-2 ring-[#0d0d0d] top-0 h-2 w-2 md:h-3 md:w-3 right-0"
+					/>
+				)}
 			</div>
 		</div>
 	);

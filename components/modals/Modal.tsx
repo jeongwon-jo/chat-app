@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react'
 import {
 	Dialog,
 	DialogPanel,
 	Transition,
 	TransitionChild,
 } from "@headlessui/react";
-import {IoClose} from "react-icons/io5"
+import React, { Fragment } from 'react';
+import { IoClose } from "react-icons/io5";
 
 interface ModalProps {
   isOpen?: boolean;
@@ -28,7 +28,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 					<div className="fixed inset-0 bg-[#00000050]" />
 				</TransitionChild>
 				<div className="fixed inset-0 z-10 overflow-y-auto">
-					<div className="flex items-center justify-center min-h-full p-4 text-center">
+					<div className="flex items-center justify-center min-h-full p-3 text-center">
 						<TransitionChild
 							as={Fragment}
 							enter="ease-out duration-300"
@@ -38,9 +38,9 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 							leaveFrom="opacity-100 translate-y-0 sm:scale-100"
 							leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 						>
-              <DialogPanel className={"relative w-full px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white dark:bg-gray-900 rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg sm:p-6"}>
+              <DialogPanel className={"relative w-full px-3 pt-4 pb-3 overflow-hidden text-left transition-all transform bg-[#161616] border border-[#242424] shadow-xl sm:my-8 sm:w-full sm:max-w-lg sm:p-6"}>
                 <div className='absolute top-0 right-0 z-10 hidden pt-4 pr-4 sm:block'>
-                  <button type="button" onClick={onClose} className='text-gray-400 dark:text-gray-500 bg-white dark:bg-gray-900 rounded-md hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:border-2 focus:border-primary'><IoClose className='w-6 h-6' /></button>
+                  <button type="button" onClick={onClose} className='text-gray-500 bg-transparent hover:text-gray-200 focus:outline-none'><IoClose className='w-6 h-6' /></button>
                 </div>
                 {children}
               </DialogPanel>

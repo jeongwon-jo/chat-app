@@ -1,8 +1,8 @@
 "use client"
 
+import clsx from "clsx";
 import React from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
-import clsx from "clsx"
 interface InputProps {
   id: string;
   label: string;
@@ -23,7 +23,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">{label}</label>
+      <label htmlFor={id} className="block text-sm font-semibold leading-6 text-gray-300">{label}</label>
       <div className="mt-2">
         <input
           type={type}
@@ -33,8 +33,8 @@ const Input: React.FC<InputProps> = ({
           {...register(id, { required })}
           className={
             (clsx(
-              `form-input block w-full py-2 rounded-sm text-gray-900 dark:text-gray-100 dark:bg-gray-800 border border-inset border-gray-300 dark:border-gray-600 placeholder:text-gray-400 focus:border-2 focus:border-inset focus:border-primary sm:text-sm sm:leading-6 px-2`,
-              errors[id] && "focus:border-rose-500",
+              `form-input block w-full py-2.5 text-gray-100 bg-gary-900 border border-[#2e2e2e] placeholder:text-gray-600 focus:border-2 focus:border-primary sm:text-sm sm:leading-6 px-2 outline-none`,
+              errors[id] && "focus:border-rose-500 border-rose-800",
               disabled && "opacity-50 cursor-default"
             ))
           }

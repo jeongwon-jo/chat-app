@@ -4,6 +4,7 @@ import Button from '@/components/Button'
 import Input from '@/components/inputs/Input'
 import axios from "axios"
 import { signIn, useSession } from 'next-auth/react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
@@ -89,35 +90,18 @@ const AuthForm = () => {
     }
 	};
 
-
-  const socialAction = (action: string) => {
-    setIsLoading(true)
-
-    signIn(action, { redirect: false })
-			.then((callback) => {
-				if (callback?.error) {
-					toast.error("Invalid credentials");
-				}
-
-				if (callback?.ok) {
-					router.push("/conversations");
-				}
-			})
-			.finally(() => {
-				setIsLoading(false);
-			});
-  }
-	
-
 	return (
 		<>
 			<div className={`sm:mx-auto sm:w-full sm:max-w-md`}>
-				<h2 className="mt-6 text-2xl font-bold tracking-tight text-center text-gray-900">
+				<div className='flex justify-center items-center'>
+					<Image src={"/images/logo_white.png"} width={180} height={20} alt='Hi Chat Logo' />
+				</div>
+				<h2 className="mt-4 text-2xl font-semibold tracking-tight text-center text-gray-300 presentation">
 					{varient === "LOGIN" ? "로그인" : "회원가입"}
 				</h2>
 			</div>
 			<div className={`mt-8 sm:mx-auto sm:w-full sm:max-w-md`}>
-				<div className="px-4 py-8 bg-white sm:px-10">
+				<div className="px-4 py-8 bg-[#161616] border border-[#242424] sm:px-10">
 					<form
 						action=""
 						onSubmit={handleSubmit(onSubmit)}
@@ -158,33 +142,13 @@ const AuthForm = () => {
 						</div>
 					</form>
 					<div className="mt-6">
-						{/* <div className="relative">
-							<div className={`absolute inset-0 flex items-center`}>
-								<div className={`w-full border-t border-gray-300`} />
-							</div>
-							<div className={`relative flex justify-center text-sm`}>
-								<span className={`px-2 text-gray-500 bg-white`}>
-									소셜로그인
-								</span>
-							</div>
-						</div>
-						<div className="flex items-center gap-2 mt-6">
-							<AuthSocialButton
-								icon={BsGithub}
-								onClick={() => socialAction("github")}
-							/>
-							<AuthSocialButton
-								icon={BsGoogle}
-								onClick={() => socialAction("google")}
-							/>
-						</div> */}
 						<div className="flex justify-center gap-2 px-2 mt-6 text-sm text-gray-500">
 							<div>
 								{varient === "LOGIN"
 									? "메신저를 처음 사용하시나요?"
 									: "이미 계정이 있나요?"}
 							</div>
-							<div onClick={toggleVarient} className="underline cursor-pointer">
+							<div onClick={toggleVarient} className="underline cursor-pointer text-gray-400 hover:text-gray-200 transition">
 								{varient === "LOGIN" ? "계정만들기" : "로그인하기"}
 							</div>
 						</div>
