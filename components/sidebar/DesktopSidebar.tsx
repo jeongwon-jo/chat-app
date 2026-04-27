@@ -1,8 +1,8 @@
 "use client"
 
-import { User } from '@prisma/client'
 import useRoutes from '@/hooks/useRoutes';
-import React, { useState } from 'react'
+import { User } from '@prisma/client';
+import { useState } from 'react';
 import Avatar from '../Avatar';
 import DesktopItem from './DesktopItem';
 import SettingsModal from './SettingsModal';

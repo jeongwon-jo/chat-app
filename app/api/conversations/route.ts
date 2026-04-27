@@ -1,8 +1,7 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import { NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
 import { pusherServer } from "@/libs/pusher";
-import { User } from "@prisma/client";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {

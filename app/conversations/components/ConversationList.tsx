@@ -16,10 +16,9 @@ import ConversationBox from './ConversationBox';
 interface ConversationListProps {
   initialItems: FullConversationType[];
   users: User[];
-  title: string;
 }
 
-const ConversationList = ({ initialItems, users, title }: ConversationListProps) => {
+const ConversationList = ({ initialItems, users }: ConversationListProps) => {
   const [items, setItems] = useState(initialItems);
   const [pinnedIds, setPinnedIds] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');

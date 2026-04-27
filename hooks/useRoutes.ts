@@ -1,13 +1,13 @@
 "use client"
 
 import { signOut } from "next-auth/react";
-import { usePathname } from "next/navigation"
-import {HiChat } from "react-icons/hi"
-import { HiUsers, HiArrowLeftOnRectangle } from "react-icons/hi2";
+import { usePathname } from "next/navigation";
+import { HiChat } from "react-icons/hi";
+import { HiArrowLeftOnRectangle, HiUsers } from "react-icons/hi2";
 import useConverSation from "./useConversation";
 const useRoutes = () => {
   const pathname = usePathname()
-  const { isOpen, conversationId } = useConverSation()
+  const { isOpen } = useConverSation()
   
   const routes = [
 		{

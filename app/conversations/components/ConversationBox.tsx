@@ -27,7 +27,7 @@ const ConversationBox = ({ data, selected, pinned, onPin }: ConversationBoxProps
   }, [data.messages])
 
   const lastMessageText = useMemo(() => {
-    if (lastMessage?.image) return "Sent an image"
+    if (lastMessage?.image) return "사진을 보냈습니다."
     if (lastMessage?.body) return lastMessage?.body
     return "대화를 시작했습니다."
   }, [lastMessage?.body, lastMessage?.image])
