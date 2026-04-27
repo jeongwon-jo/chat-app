@@ -25,9 +25,12 @@ const Body = ({ initialMessages, searchQuery = '', onReply }: BodyProps) => {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'instant' });
+  }, []);
+
+  useEffect(() => {
     const client = getPusherClient();
     client.subscribe(conversationId);
-    bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
       axios.post(`/api/conversations/${conversationId}/seen`);

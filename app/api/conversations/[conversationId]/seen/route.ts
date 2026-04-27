@@ -8,7 +8,7 @@ interface IParams {
 }
 
 export async function POST(
-	request: Request,
+	_request: Request,
 	{ params }: { params: Promise<IParams> },
 ) {
   try {
@@ -20,16 +20,11 @@ export async function POST(
 			}
 
 			const conversation = await prisma.conversation.findUnique({
-				where: {
-					id: conversationId,
-				},
+				where: { id: conversationId },
 				include: {
 					messages: {
-						include: {
-							seen: true,
-						},
+						include: { seen: true },
 					},
-					users: true,
 				},
 			});
 
@@ -37,42 +32,42 @@ export async function POST(
 				return new NextResponse("Invalid ID", { status: 400 });
 			}
 
-			const lastMessage =
-				conversation.messages[conversation.messages.length - 1];
-
-			if (!lastMessage) {
-				return NextResponse.json(conversation);
-			}
-
-			const updatedMessage = await prisma.message.update({
-				where: {
-					id: lastMessage.id,
-				},
-				include: {
-					sender: true,
-					seen: true,
-				},
-				data: {
-					seen: {
-						connect: {
-							id: currentUser.id,
-						},
-					},
-				},
-			});
-
-			if (lastMessage.seenIds.indexOf(currentUser.id) !== -1) {
-				return NextResponse.json(conversation);
-			}
-
-			await pusherServer.trigger(
-				conversationId!,
-				"messages:update",
-				updatedMessage,
+			const unseenMessages = conversation.messages.filter(
+				(m) => !m.seenIds.includes(currentUser.id)
 			);
 
+			if (unseenMessages.length === 0) {
+				return new NextResponse("Success");
+			}
+
+			await Promise.all(
+				unseenMessages.map((m) =>
+					prisma.message.update({
+						where: { id: m.id },
+						data: { seen: { connect: { id: currentUser.id } } },
+					})
+				)
+			);
+
+			const lastMessage = await prisma.message.findFirst({
+				where: { conversationId: conversationId! },
+				orderBy: { createdAt: "desc" },
+				include: { seen: true, sender: true },
+			});
+
+			if (!lastMessage) {
+				return new NextResponse("Success");
+			}
+
+			await pusherServer.trigger(currentUser.email!, "conversation:update", {
+				id: conversationId,
+				messages: [lastMessage],
+			});
+
+			await pusherServer.trigger(conversationId!, "messages:update", lastMessage);
+
 			return new NextResponse("Success");
-    
+
   } catch (error) {
     return new NextResponse("Error", {status: 500});
   }

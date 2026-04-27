@@ -59,7 +59,7 @@ const SettingsModal = ({
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<form action="" onSubmit={handleSubmit(onSubmit)}>
 				<div className='space-y-12'>
-					<>
+					<div>
 						<h2 className='text-base font-semibold leading-7 text-gray-100'>프로필</h2>
 						<p className='mt-1 text-sm leading-6 text-gray-500'>프로필을 수정하세요.</p>
 						<div className='flex flex-col mt-6 gap-y-6'>
@@ -89,15 +89,14 @@ const SettingsModal = ({
 										uploadPreset={
 											process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET
 										}
+										className={`flex justify-center px-3 py-2 text-md font-semibold focus-visible:outline focus-visible:outline-offset-2 transition bg-secondary text-secondary-text hover:bg-secondary-hover${isLoading ? " opacity-50 cursor-default pointer-events-none" : ""}`}
 									>
-										<Button disabled={isLoading} secondary type="button" className='py-2!'>
-											이미지 변경
-										</Button>
+										이미지 변경
 									</CldUploadButton>
 								</div>
 							</div>
 						</div>
-          </>
+          </div>
           <div className='flex items-center justify-end gap-x-3 mt-3'>
             <Button disabled={isLoading} secondary onClick={onClose} className="py-2!">취소</Button>
             <Button disabled={isLoading} type='submit' className='py-2!'>저장</Button>

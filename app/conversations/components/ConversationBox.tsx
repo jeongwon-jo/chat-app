@@ -41,12 +41,12 @@ const ConversationBox = ({ data, selected, pinned, onPin }: ConversationBoxProps
   }, [lastMessage, userEmail])
 
   const unreadCount = useMemo(() => {
-    if (!userEmail) return 0
+    if (!userEmail || selected) return 0
     return data.messages.filter((m) =>
       m.sender?.email !== userEmail &&
       !m.seen?.some((u) => u.email === userEmail)
     ).length
-  }, [data.messages, userEmail])
+  }, [data.messages, userEmail, selected])
 
   const handleClick = () => {
     router.push(`/conversations/${data.id}`)
