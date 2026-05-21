@@ -1,7 +1,6 @@
-import React from 'react'
-import EmptyState from '@/components/EmptyState'
 import getConversationById from '@/app/actions/getConversationById'
 import getMessages from '@/app/actions/getMessages'
+import EmptyState from '@/components/EmptyState'
 import ConversationClient from './components/ConversationClient'
 
 interface IParams {

@@ -11,9 +11,9 @@ const getMessages = async (conversationId: string) => {
           include: { sender: true },
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: "asc" },
     });
-
+    
     return messages;
   } catch {
     return [];

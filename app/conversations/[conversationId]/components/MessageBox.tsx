@@ -43,8 +43,9 @@ const MessageBox = ({ data, isLast, highlight = '', onReply }: MessageBoxProps) 
   const isOwn = session.data?.user?.email === data?.sender?.email;
   const isDeleted = !!data.deletedAt;
 
+  const currentUserEmail = session.data?.user?.email;
   const seenList = (data.seen || [])
-    .filter((user) => user.email !== data?.sender?.email)
+    .filter((user) => user.email !== data?.sender?.email && user.email !== currentUserEmail)
     .map((user) => user.name)
     .join(', ');
 

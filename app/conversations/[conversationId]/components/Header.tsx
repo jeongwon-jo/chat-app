@@ -84,7 +84,7 @@ const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps)
               placeholder="메시지 검색..."
               value={searchQuery}
               onChange={(e) => onSearchChange?.(e.target.value)}
-              className="w-full px-3 py-3 text-sm bg-[#f0f0f0] border border-[#b3b3b3] text-gray-100 placeholder:text-gray-600 focus:outline-none focus:border-gray-500"
+              className="w-full px-3 py-3 text-sm bg-[#f0f0f0] border border-[#b3b3b3] text-gray-900 placeholder:text-gray-600 focus:outline-none focus:border-gray-500"
             />
           </div>
         )}

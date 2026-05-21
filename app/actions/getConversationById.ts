@@ -1,5 +1,5 @@
-import getCurrentUser from "./getCurrentUser"
 import prisma from "@/libs/prismadb";
+import getCurrentUser from "./getCurrentUser";
 
 const getConversationById = async(conversationId: string) => {
   try {
@@ -16,7 +16,7 @@ const getConversationById = async(conversationId: string) => {
         users: true
       }
     })
-
+    
     return conversation
   } catch (error) {
     return null
