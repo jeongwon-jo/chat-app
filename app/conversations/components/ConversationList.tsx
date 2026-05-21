@@ -1,5 +1,6 @@
 "use client"
 import GroupChatModal from '@/components/modals/GroupChatModal';
+import useActiveChannel from '@/hooks/useActiveChannel';
 import useConverSation from '@/hooks/useConversation';
 import { getPusherClient } from '@/libs/pusherClient';
 import { FullConversationType } from '@/types';
@@ -19,6 +20,7 @@ interface ConversationListProps {
 }
 
 const ConversationList = ({ initialItems, users }: ConversationListProps) => {
+  useActiveChannel();
   const [items, setItems] = useState(initialItems);
   const [pinnedIds, setPinnedIds] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');

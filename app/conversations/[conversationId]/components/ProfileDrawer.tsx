@@ -86,7 +86,7 @@ const ProfileDrawer = ({ isOpen, onClose, data }: ProfileDrawerProps) => {
                             {data.isGroup ? (
                               <AvatarGroup users={data.users} />
                             ) : (
-                              <Avatar user={otherUser} />
+                              <Avatar user={otherUser} isActive={isActive} />
                             )}
                           </div>
                           <div className="text-gray-100">{title}</div>

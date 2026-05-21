@@ -1,6 +1,5 @@
 import { User } from '@prisma/client';
 import Image from 'next/image';
-import React from 'react'
 
 interface AvatarProps {
   user: User;
@@ -20,7 +19,7 @@ const Avatar = ({ user, isActive }: AvatarProps) => {
 				</div>
 				{isActive && (
 					<span
-						className="absolute block rounded-full bg-green-500 ring-2 ring-[#0d0d0d] top-0 h-2 w-2 md:h-3 md:w-3 right-0"
+						className="absolute block rounded-full bg-green-500 border border-white top-0.5 h-2 w-2 md:h-3 md:w-3 right-0"
 					/>
 				)}
 			</div>

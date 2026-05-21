@@ -4,6 +4,7 @@ import { getPusherClient } from '@/libs/pusherClient';
 import { FullMessageType, ReplyPreview } from '@/types';
 import axios from 'axios';
 import { find } from "lodash";
+import { useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
 import MessageBox from './MessageBox';
 
@@ -20,6 +21,7 @@ interface TypingUser {
 
 const Body = ({ initialMessages, searchQuery = '', onReply }: BodyProps) => {
   const { conversationId } = useConverSation();
+  const { data: session } = useSession();
   const [messages, setMessages] = useState<FullMessageType[]>(initialMessages);
   const [typingUsers, setTypingUsers] = useState<string[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -92,12 +94,15 @@ const Body = ({ initialMessages, searchQuery = '', onReply }: BodyProps) => {
           />
         ))
       )}
-      {typingUsers.length > 0 && (
-        <div className="px-6 pb-2 text-xs text-gray-600 italic">
-          {typingUsers.join(', ')}이(가) 입력 중...
-        </div>
-      )}
-      <div className="pt-24" ref={bottomRef} />
+      
+      <div className='block h-12 pb-12 relative' ref={bottomRef}>
+        {typingUsers.filter((u) => u !== session?.user?.name).length > 0 && (
+          <div className="px-6 pb-2 text-xs text-gray-600 absolute bottom-0">
+            {typingUsers.filter((u) => u !== session?.user?.name).join(', ')}이(가) 입력 중...
+          </div>
+        )}
+      </div>
+      
     </div>
   );
 };

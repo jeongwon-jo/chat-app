@@ -1,5 +1,6 @@
 import Avatar from '@/components/Avatar';
 import AvatarGroup from '@/components/AvatarGroup';
+import useActiveList from '@/hooks/useActiveList';
 import useOtherUser from '@/hooks/useOtheruser';
 import { FullConversationType } from '@/types';
 import clsx from 'clsx';
@@ -19,6 +20,8 @@ interface ConversationBoxProps {
 const ConversationBox = ({ data, selected, pinned, onPin }: ConversationBoxProps) => {
   const otherUser = useOtherUser(data);
   const session = useSession()
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email || "") !== -1;
   const router = useRouter()
 
   const lastMessage = useMemo(() => {
@@ -65,7 +68,7 @@ const ConversationBox = ({ data, selected, pinned, onPin }: ConversationBoxProps
 			{data.isGroup ? (
 				<AvatarGroup users={data.users} />
 			) : (
-				<Avatar user={otherUser} />
+				<Avatar user={otherUser} isActive={isActive} />
 			)}
 			<div className="flex-1 min-w-0">
 				<div className="focus:outline-none">

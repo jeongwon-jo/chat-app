@@ -1,6 +1,7 @@
 "use client"
 import Avatar from '@/components/Avatar'
 import LoadingModal from '@/components/modals/LoadingModal'
+import useActiveList from '@/hooks/useActiveList'
 import axios from 'axios'
 import { User } from "@prisma/client";
 import { useRouter } from 'next/navigation'
@@ -13,6 +14,8 @@ interface UserBoxProps {
 const UserBox = ({data}:UserBoxProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)
+  const { members } = useActiveList();
+  const isActive = members.indexOf(data?.email || "") !== -1;
 
   const handleClick = () => {
     setIsLoading(true)
@@ -29,7 +32,7 @@ const UserBox = ({data}:UserBoxProps) => {
       {isLoading && <LoadingModal />}
 
       <div onClick={handleClick} className='w-full relative flex items-center space-x-3 bg-transparent p-3 hover:bg-[#1a1a1a] transition cursor-pointer'>
-        <Avatar user={data}/>
+        <Avatar user={data} isActive={isActive} />
         <div className='min-w-0 flex-1'>
           <div className='focus:outline-none'>
             <div className='flex justify-between items-center mb-1'>

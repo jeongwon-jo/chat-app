@@ -52,7 +52,7 @@ const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps)
             {conversation.isGroup ? (
               <AvatarGroup users={conversation.users} />
             ) : (
-              <Avatar user={otherUser} />
+              <Avatar user={otherUser} isActive={isActive} />
             )}
             <div className="flex flex-col">
               <div className="text-gray-900">{conversation.name || otherUser.name}</div>
