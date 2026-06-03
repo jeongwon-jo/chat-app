@@ -1,12 +1,11 @@
-import EmptyState from '@/components/EmptyState'
-import React from 'react'
+import EmptyState from "@/components/EmptyState";
 
 const UserPage = () => {
   return (
-    <div className='hidden h-full lg:block lg:pl-80'>
+    <div className="hidden h-full">
       <EmptyState />
     </div>
-  )
-}
+  );
+};
 
-export default UserPage
+export default UserPage;

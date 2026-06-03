@@ -6,7 +6,7 @@ interface UserListProps {
 }
 const UserList = ({ items }: UserListProps) => {
   return (
-    <aside className="h-full block w-full pb-20 overflow-y-auto border-r border-[#1e1e1e] bg-[#111111] lg:pb-0 lg:left-20 lg:w-80 lg:block">
+    <aside className="h-full block w-full pb-20 overflow-y-auto border-r border-[#1e1e1e] bg-[#111111]">
       <div className="px-5">
         <div className="flex-col">
           <div className="py-4 text-xl font-bold tracking-widest text-gray-100 uppercase">

@@ -1,14 +1,19 @@
-"use client"
+"use client";
 
-import Avatar from '@/components/Avatar';
-import AvatarGroup from '@/components/AvatarGroup';
-import useActiveList from '@/hooks/useActiveList';
-import useOtherUser from '@/hooks/useOtheruser';
-import { Conversation, User } from '@prisma/client';
-import Link from 'next/link';
-import { useMemo, useState } from 'react';
-import { HiChevronLeft, HiEllipsisHorizontal, HiMagnifyingGlass, HiXMark } from "react-icons/hi2";
-import ProfileDrawer from './ProfileDrawer';
+import Avatar from "@/components/Avatar";
+import AvatarGroup from "@/components/AvatarGroup";
+import useActiveList from "@/hooks/useActiveList";
+import useOtherUser from "@/hooks/useOtheruser";
+import { Conversation, User } from "@prisma/client";
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import {
+  HiChevronLeft,
+  HiEllipsisHorizontal,
+  HiMagnifyingGlass,
+  HiXMark,
+} from "react-icons/hi2";
+import ProfileDrawer from "./ProfileDrawer";
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -18,34 +23,42 @@ interface HeaderProps {
   searchQuery?: string;
 }
 
-const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps) => {
-  const otherUser = useOtherUser(conversation)
-  const { members } = useActiveList()
+const Header = ({
+  conversation,
+  onSearchChange,
+  searchQuery = "",
+}: HeaderProps) => {
+  const otherUser = useOtherUser(conversation);
+  const { members } = useActiveList();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
   const isActive = members.indexOf(otherUser?.email || "") !== -1;
   const statusText = useMemo(() => {
-    if (conversation.isGroup) return `${conversation.users.length} members`
-    return isActive ? "Active" : "Offline"
-  }, [conversation, isActive])
+    if (conversation.isGroup) return `${conversation.users.length} members`;
+    return isActive ? "Active" : "Offline";
+  }, [conversation, isActive]);
 
   const handleSearchToggle = () => {
     if (searchOpen) {
-      onSearchChange?.('')
+      onSearchChange?.("");
     }
-    setSearchOpen((v) => !v)
-  }
+    setSearchOpen((v) => !v);
+  };
 
   return (
     <>
-      <ProfileDrawer data={conversation} isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      <ProfileDrawer
+        data={conversation}
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      />
       <div className="bg-gray-100 w-full border-b border-b-gray-300">
-        <div className="flex justify-between items-center sm:px-4 py-3 px-4 lg:px-6">
+        <div className="flex justify-between items-center sm:px-4 py-3 px-4">
           <div className="flex items-center gap-3">
             <Link
               href="/conversations"
-              className="block text-gray-600 transition cursor-pointer lg:hidden hover:text-gray-100"
+              className="block text-gray-600 transition cursor-pointer hover:text-gray-100"
             >
               <HiChevronLeft size={32} />
             </Link>
@@ -55,7 +68,9 @@ const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps)
               <Avatar user={otherUser} isActive={isActive} />
             )}
             <div className="flex flex-col">
-              <div className="text-gray-900">{conversation.name || otherUser.name}</div>
+              <div className="text-gray-900">
+                {conversation.name || otherUser.name}
+              </div>
               <div className="text-sm font-light text-gray-500">
                 {statusText}
               </div>
@@ -67,7 +82,11 @@ const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps)
               className="text-gray-500 transition cursor-pointer hover:text-gray-200"
               title="메시지 검색"
             >
-              {searchOpen ? <HiXMark size={26} /> : <HiMagnifyingGlass size={24} />}
+              {searchOpen ? (
+                <HiXMark size={26} />
+              ) : (
+                <HiMagnifyingGlass size={24} />
+              )}
             </button>
             <HiEllipsisHorizontal
               size={32}
@@ -91,6 +110,6 @@ const Header = ({ conversation, onSearchChange, searchQuery = '' }: HeaderProps)
       </div>
     </>
   );
-}
+};
 
-export default Header
+export default Header;
