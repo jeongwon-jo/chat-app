@@ -1,9 +1,9 @@
 import AuthContext from "@/context/AuthContext";
 import ToasterContext from "@/context/ToasterContext";
-import type { Metadata } from "next";
-import "./globals.css";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/libs/authOptions";
+import type { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Hi Chat",
@@ -22,7 +22,9 @@ export default async function RootLayout({
       <body className="h-full">
         <AuthContext session={session}>
           <ToasterContext />
-          {children}
+          <div className="w-full h-full bg-#fff">
+            <div className="max-w-110 h-full m-auto">{children}</div>
+          </div>
         </AuthContext>
       </body>
     </html>
